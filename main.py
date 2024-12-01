@@ -11,6 +11,7 @@ from app.auth.routers import auth_router
 from app.custom_exception import register_all_errors
 from app.db_connection import shutdown, startup
 from app.events.routers import events_router
+from app.stripe.stripe_payment import payment_router
 from app.tickets.routers import tickets_router
 from config import MODE
 
@@ -76,6 +77,7 @@ app.include_router(auth_router, prefix=f"/api/{version}/auth")
 app.include_router(google_oauth_router, prefix=f"/api/{version}")
 app.include_router(events_router, prefix=f"/api/{version}/events")
 app.include_router(tickets_router, prefix=f"/api/{version}/tickets")
+app.include_router(payment_router, prefix=f"/api/{version}/stripe")
 
 
 # Run Project At Specified Port

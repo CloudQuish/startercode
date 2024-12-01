@@ -115,6 +115,7 @@ sortedcontainers==2.4.0
 SQLAlchemy==2.0.34
 starlette==0.38.5
 starlette-testclient==0.4.1
+stripe==11.3.0
 tomli==2.0.2
 tomli_w==1.1.0
 tornado==6.4.1

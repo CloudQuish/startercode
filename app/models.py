@@ -54,6 +54,7 @@ class Tickets(Base):
     number_of_tickets = Column(Integer)
     event_id = Column(Integer, ForeignKey('events.id'))
     user_id = Column(Integer, ForeignKey('users.id'))
+    payment_intent_id = Column(String, nullable=True)
     status = Column(String, default=TicketStatus.AVAILABLE.value)
     created_at = Column(TIMESTAMP, default=func.now(), nullable=False)
     updated_at = Column(TIMESTAMP, default=func.now(), onupdate=func.now(), nullable=False)
