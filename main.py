@@ -11,6 +11,7 @@ from app.auth.routers import auth_router
 from app.custom_exception import register_all_errors
 from app.db_connection import shutdown, startup
 from app.events.routers import events_router
+from app.tickets.routers import tickets_router
 from config import MODE
 
 version = "v1"
@@ -74,6 +75,7 @@ register_all_errors(app)  # Register All Errors from custom_exception file in ma
 app.include_router(auth_router, prefix=f"/api/{version}/auth")
 app.include_router(google_oauth_router, prefix=f"/api/{version}")
 app.include_router(events_router, prefix=f"/api/{version}/events")
+app.include_router(tickets_router, prefix=f"/api/{version}/tickets")
 
 
 # Run Project At Specified Port

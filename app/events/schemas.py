@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class EventBase(BaseModel):
@@ -12,8 +12,10 @@ class EventBase(BaseModel):
     date: str = Field(..., description="Date of the event")
     total_tickets: int = Field(..., gt=0, description="Total number of tickets available")
 
+
 class EventCreate(EventBase):
     pass
+
 
 class EventUpdate(EventBase):
     name: Optional[str] = None
@@ -21,6 +23,7 @@ class EventUpdate(EventBase):
     price: Optional[int] = None
     date: Optional[str] = None
     total_tickets: Optional[int] = None
+
 
 class EventResponse(EventBase):
     id: int

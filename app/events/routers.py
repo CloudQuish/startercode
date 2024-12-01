@@ -1,14 +1,13 @@
-from typing import Optional, List, Type
+from typing import List, Optional
 
 from dotenv import load_dotenv
-from fastapi import APIRouter, Depends, Query, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
-from app.auth import schemas, auth
 from app.custom_exception import EventNotFound
 from app.db_connection import get_db
-from app.events.schemas import EventCreate, EventUpdate, EventResponse
+from app.events.schemas import EventCreate, EventResponse, EventUpdate
 from app.models import Events
 
 load_dotenv()

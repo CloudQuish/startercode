@@ -1,8 +1,10 @@
 import datetime
 
-from sqlalchemy import TIMESTAMP, BigInteger, Boolean, Column, Integer, String, func, DateTime
+from sqlalchemy import TIMESTAMP, BigInteger, Boolean, Column, DateTime, ForeignKey, Integer, String, func
+from sqlalchemy.orm import relationship
 
 from app.db_connection import Base
+from app.enums import TicketStatus
 
 
 class User(Base):
@@ -44,3 +46,16 @@ class Events(Base):
 
     def __repr__(self):
         return f"{self.name}"
+
+
+class Tickets(Base):
+    __tablename__ = 'tickets'
+    id = Column(Integer, primary_key=True, index=True)
+    number_of_tickets = Column(Integer)
+    event_id = Column(Integer, ForeignKey('events.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
+    status = Column(String, default=TicketStatus.AVAILABLE.value)
+    created_at = Column(TIMESTAMP, default=func.now(), nullable=False)
+    updated_at = Column(TIMESTAMP, default=func.now(), onupdate=func.now(), nullable=False)
+
+    event = relationship("Events", back_populates="tickets")

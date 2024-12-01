@@ -113,6 +113,34 @@ class EventNotFound(BaseError):
     pass
 
 
+class TicketNotFound(BaseError):
+    """
+    Error raised when ticket is not found
+    """
+    pass
+
+
+class NoTicketsAvailable(BaseError):
+    """
+    Error raised when no tickets available
+    """
+    pass
+
+
+class TicketsAlreadyBooked(BaseError):
+    """
+    Error raised when tickets are already booked
+    """
+    pass
+
+
+class ErrorBookingTicket(BaseError):
+    """
+    Error raised when booking ticket is invalid
+    """
+    pass
+
+
 def create_exception_handler(status_code: int, message: Any) -> Callable[[Request, Exception], JSONResponse]:
     """
     This function is used to create a custom exception handler
@@ -242,5 +270,29 @@ def register_all_errors(app: FastAPI):
         message={
             "message": "Event Not Found  ⛔👿️️️",
             "error-code": "event-not-found",
+        }
+    ))
+
+    app.add_exception_handler(TicketNotFound, create_exception_handler(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        message={
+            "message": "Ticket Not Found  ⛔👿️️️",
+            "error-code": "ticket-not-found",
+        }
+    ))
+
+    app.add_exception_handler(TicketsAlreadyBooked, create_exception_handler(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        message={
+            "message": "Tickets Already Booked  ⛔👿️️️",
+            "error-code": "tickets-already-booked",
+        }
+    ))
+
+    app.add_exception_handler(ErrorBookingTicket, create_exception_handler(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        message={
+            "message": "Error Booking Ticket  ⛔👿️️️",
+            "error-code": "error-booking-ticket",
         }
     ))
