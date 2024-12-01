@@ -106,6 +106,13 @@ class InvalidRedirectUri(BaseError):
     pass
 
 
+class EventNotFound(BaseError):
+    """
+    Error raised when event is not found
+    """
+    pass
+
+
 def create_exception_handler(status_code: int, message: Any) -> Callable[[Request, Exception], JSONResponse]:
     """
     This function is used to create a custom exception handler
@@ -227,5 +234,13 @@ def register_all_errors(app: FastAPI):
         message={
             "message": "Invalid Redirect URI  ⛔👿️️️",
             "error-code": "invalid-redirect-uri",
+        }
+    ))
+
+    app.add_exception_handler(EventNotFound, create_exception_handler(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        message={
+            "message": "Event Not Found  ⛔👿️️️",
+            "error-code": "event-not-found",
         }
     ))

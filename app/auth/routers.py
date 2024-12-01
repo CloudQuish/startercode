@@ -30,7 +30,7 @@ async def send_email(email: EmailSchema, background_tasks: BackgroundTasks):
     :param background_tasks:
     :return: JSONResponse
     """
-    subject = "Welcome To AcciGuard"
+    subject = "Welcome To TicketBooking"
     # background_tasks.add_task(send_email_async, email.addresses, "Welcome to AcciGuard",
     #                           template_name="verification_email.html", template_data={
     #                             "message": "Hello",
@@ -90,33 +90,6 @@ async def create_users(user: schemas.UserCreate, background_tasks: BackgroundTas
     return CreateUserResponseMessage(user=new_user)
 
 
-@auth_router.post('/create_admin_users/', response_model=schemas.CreateUserResponseMessage)
-def create_admin_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    """
-    Creates and verifies admin users.
-    :param user: email, password, address, phone_number, role=admin, password
-    :param db: Database Session
-    :return: admin_user
-    """
-    db_user = get_user_by_email(db, user.email)
-    if db_user:
-        raise UserAlreadyExists
-    new_admin_user = create_user(db, user)
-    domain = os.environ.get('DOMAIN')
-    token = create_url_safe_token({"email": user.email})
-    verification_link = f"http://{domain}/api/v1/auth/verify/{token}/"
-    send_email_celery.delay(
-        addresses=[user.email],
-        subject="Verify Admin Account",
-        template_name="verification_email.html",
-        template_data={
-            "user_email": user.email,
-            "verification_link": verification_link
-        }
-    )
-    return CreateUserResponseMessage(user=new_admin_user)
-
-
 @auth_router.post("/token/refresh/", response_model=schemas.TokenResponse)
 async def refresh_access_token(token: str, db: Session = Depends(get_db)):
     """
@@ -156,7 +129,6 @@ async def login_for_access_token(form_data: LoginData, db: Session = Depends(get
 async def read_users_me(current_user: schemas.UserResponse = Depends(get_current_verified_user),):
     """
     Current Verified Logged-In Users
-    :param _: Only Admin is allowed to see all users
     :param current_user: Currently logged-in verified user
     :return: current user
     """

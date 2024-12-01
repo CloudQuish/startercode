@@ -10,6 +10,7 @@ from app.auth.google_oauth import google_oauth_router
 from app.auth.routers import auth_router
 from app.custom_exception import register_all_errors
 from app.db_connection import shutdown, startup
+from app.events.routers import events_router
 from config import MODE
 
 version = "v1"
@@ -25,8 +26,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="AcciGuard API",
-    description=f"{version} - AcciGuard REST API",
+    title="TicketBooking API",
+    description=f"{version} - TicketBooking REST API",
     version=version,
     lifespan=lifespan,
     docs_url=f"/api/{version}/docs",
@@ -72,6 +73,7 @@ register_all_errors(app)  # Register All Errors from custom_exception file in ma
 
 app.include_router(auth_router, prefix=f"/api/{version}/auth")
 app.include_router(google_oauth_router, prefix=f"/api/{version}")
+app.include_router(events_router, prefix=f"/api/{version}/events")
 
 
 # Run Project At Specified Port

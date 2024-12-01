@@ -42,7 +42,6 @@ def create_user(db: Session, user: schemas.UserCreate):
         password=hashed_password,
         phone_number=user.phone_number,
         address=user.address,
-        role=user.role,
         is_verified=False,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow())

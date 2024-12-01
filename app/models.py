@@ -1,4 +1,6 @@
-from sqlalchemy import TIMESTAMP, BigInteger, Boolean, Column, Integer, String, func
+import datetime
+
+from sqlalchemy import TIMESTAMP, BigInteger, Boolean, Column, Integer, String, func, DateTime
 
 from app.db_connection import Base
 
@@ -18,3 +20,27 @@ class User(Base):
 
     def __repr__(self):
         return f"{self.email}"
+
+
+class BlacklistedToken(Base):
+    __tablename__ = "blacklisted_tokens"
+
+    id = Column(Integer, primary_key=True, index=True)
+    token = Column(String, unique=True, index=True)
+    blacklisted_on = Column(DateTime, default=datetime.datetime.utcnow)
+
+
+class Events(Base):
+    __tablename__ = 'events'
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    description = Column(String)
+    venue = Column(String)
+    price = Column(Integer)
+    date = Column(String)
+    total_tickets = Column(Integer)
+    created_at = Column(TIMESTAMP, default=func.now(), nullable=False)
+    updated_at = Column(TIMESTAMP, default=func.now(), onupdate=func.now(), nullable=False)
+
+    def __repr__(self):
+        return f"{self.name}"
