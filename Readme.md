@@ -1,183 +1,114 @@
-**This is Copy of Master_Readme.md file.**
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
----
-Below is the list that defines which file is for which role:
+## Getting Started
 
-1. **Readme_Backend_Leader_Architect.md** - This file is for the role: **Backend Developer + Leader + Architect**
-2. **Readme_Frontend_Dev.md** - This file is for the role: **Frontend Developer**
-3. **Readme_Devops_Fullstack.md** - This file is for the role: **Fullstack Developer + DevOps**
-4. **Readme_Generalist.md** - This is for the role: **Generalist Developer**
+First, run the development server:
 
-Please make sure you are submitting the correct file for the role you are applying for. If you are applying for multiple roles, please submit the corresponding files. Note that we will not provide reenumeration for multiple submissions. And only completed submissions will be considered for the evaluation and reenumeration as discussed.
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
----
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# **Congratulations and Welcome!**
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Dear Candidate,
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-First of all, congratulations and thank you for accepting this challenge. Please read this document to its entirety before starting any project.
+## Learn More
 
-You are among a select few who have been given this opportunity, and we are truly excited to see what you will build. 
+To learn more about Next.js, take a look at the following resources:
 
-We understand that the scope of any of above project within the given time frame is demanding. However, we want to clarify that this is not because we do not value your time or effort; rather, it is because we are looking for someone extraordinary—someone who thrives under pressure, thinks critically, and delivers well-thought-out solutions even in challenging circumstances.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-This project is not just about technical skills; it is a reflection of qualities like determination, problem-solving, time management, and the ability to persevere. These are the attributes we believe are essential for success in the role we are hiring for.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
----
+## Deploy on Vercel
 
-## **Implementation Guidelines**
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-We want to assure you that we are flexible with the architecture you choose to implement(for applicable roles) as long as you follow the **MVC architecture** (optinal, for backend tasks, if it makes you slow but come up with reasoning why you opt for something else). For frontend, we do want you to use NextJS.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-To make it easier, you can start by cloning one of the following boilerplate repositories:
+## Explanation of Libraries/Tools Used and Why
 
-### **Node.js/Express/Next.js**
-- Clone this repository: [Node.js/Express/Next.js Boilerplate](https://github.com/nishanprime/NextJSNodeJSDockerNginxBoilerPlate.git)
+### Libraries/Tools Used:
 
-### **Flask**
-- Clone this repository: [Flask MVC Boilerplate](https://github.com/nishanprime/FlaskMVCSetup.git)
+1. **Next.js**
 
-### **Preference**:
-- For backend roles, while we would prefer the **Node.js/Express/Next.js** setup, we are open to you using **Flask** if you believe the implementation would be better suited for the project. If you choose Flask, provide reasoning for your decision—it will help us understand your thought process.
+   - Chosen for its server-side rendering capabilities, file-based routing, and efficient development experience for building modern web applications.
+   - Optimizes performance with built-in tools like image optimization, API routes, and incremental static regeneration.
 
-- Additionally, if you need parts of the **Next.js/Node.js** boilerplate while working with Flask, feel free to clone both repositories and utilize whatever is necessary.
+2. **React Flow**
 
-- For Frontend roles, we would prefer you to use **Next.js**.
+   - Used to create an interactive diagram builder with features like customizable nodes and edges, drag-and-drop functionality, and real-time updates.
+   - Simplifies the development of visual workflows and diagrams.
 
-- For DevOps roles, we would want you to make use of:
-1. Docker
-2. Nginx
-3. Github Actions for CI/CD
-4. Any Ubuntu based server for deployment
-5. Let's Encrypt for SSL
-6. PM2 for process management or any other process manager
-7. Any other tools you think are necessary
+3. **Tailwind CSS**
 
-You can use any of these VPS provider to get free VPS to get started:
-1. https://gratisvps.net/cvps/
-2. https://vpswala.org/free-vps-no-credit-card.html
+   - Provides a utility-first CSS framework for rapid UI development.
+   - Ensures consistent and responsive designs without the need for custom stylesheets.
 
-Or any other VPS provider you are comfortable with.
----
+4. **React Hot Toast**
 
-## **A Unique Opportunity**
+   - Used for showing user-friendly notifications such as success or error messages.
+   - Provides a lightweight and customizable toast notification system.
 
-Rest assured, this challenge is not just a test; it’s an introduction to the kind of work culture you can expect here—a culture like no other in Nepal. We are building something exceptional, a workplace that fosters innovation, collaboration, and growth at a level rarely seen before. If you manage to pull this off, you will not just have the opportunity to join a team—you will become part of a transformative journey, one where your contributions will have real impact and where you will thrive in an environment designed to bring out the best in you.
+5. **Lucide Icons**
 
-We are rooting for your success, and we can’t wait to see your solution!
+   - Offers a collection of modern and customizable icons, enhancing the UI design with intuitive visuals.
 
-## **Time Tracking Instructions**
+6. **Custom Hooks and Context API**
 
-As part of this project, we kindly request you to **self-report the time you spend** on each task. This approach relies on **honesty and transparency**, which are qualities we highly value and will consider during the evaluation process and the interview.
+   - Utilized for managing state across the application, such as nodes and edges in the diagram builder.
+   - Simplifies state management without relying on external libraries.
 
----
-
-## **Why Time Tracking?**
-We understand that different people work at different paces, and this is not about how fast you complete the project. Instead, this is about:
-1. **Understanding your approach** to time management.
-2. **Seeing how you prioritize tasks** within the given timeframe.
-3. **Getting insight into your problem-solving process.**
+7. **ShadCN UI Components**
+   - Used to build accessible and reusable UI components like `Sheet` for sidebar functionality.
+   - Enhances design consistency and reduces development overhead.
 
 ---
 
-## **What to Track**
-Please maintain a simple log that includes the following:
-- **Date**: The day you worked on the project.
-- **Time Spent**: How many hours you worked (approximately).
-- **Task Description**: A brief description of what you worked on during that time.
+## Challenges Faced and How They Were Overcome
+
+1. **Challenge: Managing State Across Components**
+
+   - **Problem:** Keeping track of nodes and edges, and ensuring the diagram builder updates efficiently.
+   - **Solution:** Used Context API to manage state globally and custom hooks to encapsulate logic for updating history, ensuring a clean and modular approach.
+
+2. **Challenge: Importing and Saving Files**
+
+   - **Problem:** Loading diagrams from JSON files and synchronizing them with local storage.
+   - **Solution:** Implemented file import functionality and updated local storage in real-time using `localStorage.setItem` to maintain history and user progress.
+
+3. **Challenge: Customizing Third-Party Components**
+
+   - **Problem:** Adjusting the width and behavior of components like `Sheet` for responsiveness.
+   - **Solution:** Used Tailwind CSS and dynamic styling based on state to ensure flexibility and a seamless user experience.
+
+4. **Challenge: Visualizing Complex Diagrams**
+   - **Problem:** Rendering dynamic diagrams while maintaining performance.
+   - **Solution:** Leveraged React Flow’s efficient rendering engine and optimized the data flow with memoization techniques.
 
 ---
 
-## **Example Time Log**
-| Date       | Time Spent (hrs) | Task Description                         |
-|------------|------------------|------------------------------------------|
-| 2024-11-28 | 3                | Implemented Ticket Locking               |
-| 2024-11-29 | 4                | Integrated Stripe Checkout               |
-| 2024-11-29 | 2                | Implemented Context API etc |
+With these tools and solutions, the project offers an interactive and scalable diagram-building experience while ensuring performance and maintainability.
 
----
+## Time Tracking:
 
-## **Important Notes**
-- **Honesty is key**: We trust you to report your time accurately. This will be considered during your evaluation and interview.
-- **It's not about speed**: We are looking for thoughtful implementation and prioritization, not rushing through tasks just for the sake of completion.
-- **Doesn't mean we don't value fast work**: While we appreciate thoughtful work, we also value efficiency. If you can complete the project quickly without compromising quality, that's a plus.
-- **Document thoroughly**: The quality of your self-reporting reflects on your ability to work transparently and methodically.
+## **Time Log**
 
----
-
-## **Project Timeline**
-
-- You will have a total of **1–3 days** (calendar days) to complete the project from the time you receive this email.
-- For example:
-  - **Email Sent**: Thursday, November 28
-  - **Submission Deadline**: Sunday, December 1, 11:59 PM (Nepal Time Zone)
-
----
-
-## **Why This Timeline?**
-
-We believe this timeline provides:
-1. **Sufficient Time**: To research, implement, test, and document the project.
-2. **A Realistic Challenge**: To showcase your ability to work under time constraints while delivering quality results.
-
----
-
-## **Need an Extension?**
-
-We understand unexpected situations can arise. If you believe you need an extension, please communicate this to us as soon as possible. We may extend the deadline by up to **2 additional days**, depending on the circumstances.
-1. Contact us at **contact@cloudquish.com** to request an extension. Please provide a valid reason for the extension request and the details of yours:
-    - Your name in the application
-    - Role you applied for
-    - Email address
-    - Phone number
-
-
-## **Submission**
-- Include your time log as part of the final project submission, either:
-  - In the project `README.md`.
-  - As a separate file named `TimeLog.md`.
-- Be prepared to discuss your time log and decisions during the interview.
-
----
-
-Thank you for your hard work and honesty!
-
-
----
-
-**Best of luck! You’ve got this.**
-
-Warm regards,  
-**Cloudquish Team**  
-Cloudquish LLC  
-
-**Project Deliverables**
-
-Apart from mentioned deliverables in the respective Readme files, below are the deliverables we are expecting from you:
-
-1. Make sure to have below details on top of the readme.md file
-   - Your Name (same name as in application submission)
-   - Your Email
-   - Your Phone Number
-   - Role you applied for (you can find this in the top of this readme file)
-   - Your Address
-   - Time log (in the format mentioned above in Readme.md or TimeLog.md)
-   - Your Github Profile
-   - Your LinkedIn Profile
-   - Your Resume (If updated)
-   - Any other links you want to share (Optional)
-2. Fully functional system as per the requirements in each Readme file.
-3. Note that you can just push it to the github repo that you cloned from github classroom and we will be able to see it. No need to submit it anywhere else.
-
-
-**How to start the project?**
-
-1. Clone the repository that you have been given access to.
-2. Read the Readme file of the role you are applying for.
-3. Start working on the project.
-4. Push the code to the repository.
-5. Make sure to have the time log in the Readme.md or TimeLog.md file.
-6. Make sure to have all the deliverables mentioned above and in the respective Readme files.
-7. We will review the code and get back to you for the next steps.
-8. Done
+| **Date**   | **Time Spent (hrs)** | **Task Description**                                                                                    |
+| ---------- | -------------------- | ------------------------------------------------------------------------------------------------------- |
+| 2024-11-30 | 3                    | Created the Hero section from Figma design.                                                             |
+| 2024-12-01 | 8                    | Completed cloning the webpage from Figma design.                                                        |
+| 2024-12-02 | 1                    | Started working on the second project: Diagram Builder.                                                 |
+| 2024-12-02 | 3                    | Explored React Flow documentation and created sample nodes using dummy data.                            |
+| 2024-12-02 | 4                    | Designed and styled the Diagram Builder UI; integrated React Flow for rendering nodes and edges.        |
+| 2024-12-02 | 4                    | Debugged and resolved sidebar responsiveness and history tracking issues; gave a final touch to the UI. |
+| 2024-12-02 | 2                    | Hosted the project on Vercel and debugged build errors.                                                 |
