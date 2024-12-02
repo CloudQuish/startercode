@@ -91,7 +91,7 @@ export default function Footer() {
                       <Mail className="text-white" />
                     </div>
                     <input
-                      className=" text-black w-[120px] md:w-[120px] lg:w-[100px]  focus-within:border-none outline-none"
+                      className=" text-black w-[120px] md:w-[120px] lg:w-full  focus-within:border-none outline-none"
                       type="text"
                       placeholder="Enter your email"
                     />
