@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %} Events {% endblock %}
+
+{% block content %} 
+
+{% if user.is_authenticated %}
+    
+<table class="table" style="margin: 20px; width: 90%;">
+    <thead>
+        <tr>
+            <th>Notification</th>
+            <th>Topic</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for notification in notifications %}
+            <tr>
+                <td>{{notification.notification}}</td>
+                <td>{{notification.topic}}</td>
+                <td>
+                    <button type="button" class="Close" onclick="deleteNotification('{{notification.id}}')">&times;</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+{% endblock %}

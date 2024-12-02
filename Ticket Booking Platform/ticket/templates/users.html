@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %} Users {% endblock %}
+
+{% block content %} 
+
+<form action="/register">
+    <button class="btn btn-primary">Add new user</button>
+</form>
+
+
+<table class="table" style="margin: 20px; width: 90%;">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.role}}</td>
+                <td>
+                    <button type="button" class="Close" onclick="deleteUser('{{user.id}}')">&times;</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

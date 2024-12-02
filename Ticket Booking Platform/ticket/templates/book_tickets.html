@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %} Events {% endblock %}
+
+{% block content %} 
+
+{% if user.is_authenticated %}
+
+<table class="table" style="margin: 20px; width: 90%;">
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <th>{{event.name}}</th>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <th>{{event.date}}</th>
+        </tr>
+        <tr>
+            <th>Venue</th>
+            <th>{{event.venue}}</th>
+        </tr>
+        <tr>
+            <th>Price</th>
+            <th>{{event.price}}</th>
+        </tr>
+        <tr>
+            <th>Total tickets</th>
+            <th>{{event.total_tickets}}</th>
+        </tr>
+        <tr>
+            <th>Available tickets</th>
+            <th>{{tickets}}</th>
+        </tr>
+    </tbody>
+</table>
+
+<input type="hidden" id="price" name="price" value="{{event.price}}">
+<input type="hidden" id="total_tickets" name="total_tickets" value="{{event.total_tickets}}">
+
+<form action="/payment/{{event.id}}">
+
+    <div class="d-flex justify-content-center m-2">
+        <label for="no_of_tickets" style="margin-right: 10px;">Number of Tickets:</label>
+        <input class="form-select-sm" type="number" id="no_of_tickets" name="no_of_tickets" min="1" max="{{ tickets }}" required onchange="update()">
+    </div>
+
+    <div class="d-flex justify-content-center m-2">
+        <label for="total" style="margin-right: 10px;">Total Amount:</label>
+        <input class="form-select-sm" type="number" id="total" name="total" disabled>
+    </div>
+
+    <div class="d-flex justify-content-center m-2">
+        <label for="gateway" style="margin-right: 10px;">Pay with:</label>
+        <select class="form-select-sm" id="gateway" name="gateway">
+            <option value="esewa">Esewa</option>
+            <option value="khalti">Khalti</option>
+            <option value="khalti">ConnectIPS</option>
+        </select>
+    </div>
+
+    <div class="d-flex justify-content-center m-2">
+        <button type="submit" class="btn btn-primary">Book Now</button>
+    </div>
+</form>
+
+<script>
+    function update(){
+        price = document.getElementById("price").value;
+        tickets = document.getElementById("no_of_tickets").value;
+        total_tickets = document.getElementById("total_tickets").value;
+
+        if((total_tickets-tickets)<0){
+            alert("The number of tickets is higher than available tickets")
+            document.getElementById("tickets").value = total_tickets;
+            tickets = total_tickets;
+        }
+
+        amount = price * tickets;
+        document.getElementById("total").value = amount;
+    }
+</script>
+
+
+{% endif %}
+{% endblock %}
