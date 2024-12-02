@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+
+{% block content %} 
+
+<table class="table" style="margin: 20px; width: 90%;">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Venue</th>
+            <th>Price</th>
+            <th>Total tickets</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for event in events %}
+            <tr>
+                <th>{{event.name}}</th>
+                <th>{{event.date}}</th>
+                <th>{{event.venue}}</th>
+                <th>{{event.price}}</th>
+                <th>{{event.total_tickets}}</th>
+                <th>
+                    <form action="/events/{{event.id}}/book">
+                        <input type="number" id="tickets" name="tickets" min="1" max="{{ event.available_tickets }}" required>
+                        <button type="submit">Book Now</a>
+                    </form>
+                </th>           
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
