@@ -7,7 +7,7 @@
 - **Address**: Thimi, Bhaktapur
 - **GitHub Profile**: https://github.com/MilanPraz
 - **LinkedIn Profile**: https://www.linkedin.com/in/milan-praz-a565ba270/
-- **Resume**: [Link to Updated Resume]
+- **Resume**: milanprajapati.com.np
 - **Additional Links**: milanprajapati.com.np
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
