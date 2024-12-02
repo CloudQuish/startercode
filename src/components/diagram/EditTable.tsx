@@ -41,7 +41,6 @@ export default function EditTable({
     { id: 2, name: "", dataType: "", constraint: "" },
     { id: 3, name: "", dataType: "", constraint: "" },
   ]);
-  // console.log("EDIT NODESSS:", editNode);
   // Initialize state with data from the selected node
   useEffect(() => {
     const nodeToEdit = nodes.find((node) => node.id === editId);

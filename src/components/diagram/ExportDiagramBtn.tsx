@@ -31,12 +31,6 @@ export default function ExportDiagramBtn({
         <Button className="w-full" onClick={handleExportDiagram}>
           Export Diagram
         </Button>
-        {/* <Input
-          type="file"
-          accept="application/json"
-          onChange={handleImportDiagram}
-          className="file-input"
-        /> */}
       </div>
     </div>
   );

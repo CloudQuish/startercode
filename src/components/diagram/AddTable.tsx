@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { useDiagramContext } from "../contexts/DiagramContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -33,17 +32,9 @@ export default function AddTable({
     { id: 2, name: "", dataType: "", constraint: "" },
     { id: 3, name: "", dataType: "", constraint: "" },
   ]);
-  const [newColumn, setNewColumn] = useState({
-    name: "",
-    dataType: "",
-    constraint: "",
-  });
 
   const handleAddTable = () => {
     if (tableName) {
-      console.log("TABLEEEEEE:", columns);
-      console.log("TABLEEEEEE:", tableName);
-
       addNewTable({ tableName, columnsData: columns });
       setTableName("");
       setColumns([

@@ -1,7 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 
-// import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
@@ -46,21 +45,7 @@ export default function DiagramBuilder() {
     setEdges,
     updateHistory,
   } = useDiagramContext();
-  console.log("Context ko Nodes:", allNodes);
-  //   const [nodes, setNodes, onNodeChange] = useNodesState(allNodes);
-  //   const [edges, setEdges, onEdgeChange] = useEdgesState(initialEdges);
 
-  //   const onNodeChange = useCallback(
-  //     (changes: any) => {
-  //       setNodes((nds) => {
-  //         const newNodes = applyNodeChanges(changes, nds);
-  //         updateHistory(newNodes, allEdges); // Update history with current state
-  //         return newNodes;
-  //       });
-  //       //   setNodes((nds) => applyNodeChanges(changes, nds));
-  //     },
-  //     [setNodes, allEdges, updateHistory]
-  //   );
   const onNodeChange = useCallback(
     (changes: any) => {
       setNodes((nds) => applyNodeChanges(changes, nds)); // Update nodes without history tracking
@@ -78,10 +63,6 @@ export default function DiagramBuilder() {
     },
     [setEdges, allNodes, updateHistory]
   );
-
-  //   useEffect(() => {
-  //     setNodes(allNodes);
-  //   }, [nodes]);
 
   const onConnect = useCallback(
     (connections: Connection) => {
@@ -112,14 +93,11 @@ export default function DiagramBuilder() {
           <Panel position="top-left">
             <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
               <SheetTrigger asChild>
-                <button
-                  //   onClick={addNewTable}
-                  className="bg-primary  rounded-full text-white font-bold p-3"
-                >
+                <button className="bg-primary  rounded-full text-white font-bold p-3">
                   <Menu size={20} />
                 </button>
               </SheetTrigger>
-              <SheetContent className="  w-[500px]  ">
+              <SheetContent side={"left"} className="  w-[500px]  ">
                 <SheetHeader>
                   <SheetTitle>Configure Nodes</SheetTitle>
                   <SheetDescription>Create a new node</SheetDescription>

@@ -65,7 +65,7 @@ export default function CustomBox({ data, id }: { data: any; id: string }) {
                 <PenBox size={10} />
               </div>
             </SheetTrigger>
-            <SheetContent className="  w-[500px] ">
+            <SheetContent side={"left"} className="  w-[500px] ">
               <SheetHeader>
                 <SheetTitle>Configure Nodes</SheetTitle>
                 <SheetDescription>Edit the node</SheetDescription>

@@ -23,7 +23,6 @@ export default function LoadDiagramFile({
     const fileContent = await file.text();
     try {
       const parsedData = JSON.parse(fileContent);
-      console.log("PARSED DATA HAIIIIII:", parsedData);
 
       setNodes(parsedData.nodes);
       setEdges(parsedData.edges);

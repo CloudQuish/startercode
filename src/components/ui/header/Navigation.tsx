@@ -30,7 +30,6 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const pathname = usePathname();
-  console.log("pathname:", pathname);
 
   if (pathname === "/diagram-builder") {
     return null;

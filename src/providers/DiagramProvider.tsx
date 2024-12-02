@@ -78,10 +78,6 @@ const initialNodes = [
   },
 ];
 
-type TLocalStorage = {
-  nodes: Node[];
-  edges: Edge[];
-};
 export const DiagramProvider = ({ children }: { children: ReactNode }) => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>([]);
@@ -128,27 +124,16 @@ export const DiagramProvider = ({ children }: { children: ReactNode }) => {
   //   UPDATE HISTORY WHEN ADDED OR UPDATED TABLE
   const updateHistory = useCallback(
     (newNodes: Node[], newEdges: Edge[]) => {
-      console.log("HELLO FROM HISTORU UPDATE");
-      console.log("EDGESSSS:", newEdges);
-      console.log("NODESSSSS:", newNodes);
-
-      //   setHistory((prev) => [
-      //     ...prev.slice(0, historyIndex + 1),
-      //     { nodes: newNodes, edges: newEdges },
-      //   ]);
       setHistory((prev) => {
         const updatedHistory = [
           ...prev.slice(0, historyIndex + 1),
           { nodes: newNodes, edges: newEdges },
         ];
         // Save the updated history to localStorage
-        //    localStorage.setItem("diagramHistory", JSON.stringify(updatedHistory));
-        // Save the updated history to localStorage
         localStorage.setItem("diagram", JSON.stringify(updatedHistory));
         // saveDiagram(updateHistory);
         return updatedHistory;
       });
-      console.log("UPDATED HISTIRYY:", history);
       setHistoryIndex((prev) => prev + 1);
     },
     [historyIndex, history]
@@ -165,7 +150,6 @@ export const DiagramProvider = ({ children }: { children: ReactNode }) => {
           setNodes(parsedHistory[parsedHistory.length - 1].nodes);
           setEdges(parsedHistory[parsedHistory.length - 1].edges);
           setHistoryIndex(parsedHistory.length - 1);
-          console.log("Loaded history from localStorage:", parsedHistory);
           return;
         }
       } catch (error) {
@@ -182,13 +166,8 @@ export const DiagramProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setHistory([{ nodes, edges }]);
     setHistoryIndex(0);
-    console.log("HISTORY INITIALLLLL:", history);
   }, []);
 
-  // Log the updated history after it has been changed
-  useEffect(() => {
-    console.log("UPDATED HISTORY:", history);
-  }, [history]);
   //   TABLE UPDATE
   const updateTable = useCallback(
     (nodeId: string, newData: Partial<TTableData>) => {
@@ -207,13 +186,9 @@ export const DiagramProvider = ({ children }: { children: ReactNode }) => {
 
   //   UNDO TASK
   const undo = useCallback(() => {
-    console.log("UNDO INDEX HISTORY", historyIndex);
-    console.log("UNDO  HISTORYSSSSSSsss:", history);
     if (historyIndex > 0) {
       const newIndex = historyIndex - 1;
       const prevState = history[newIndex];
-
-      console.log("UNDO HISTORY:", prevState);
 
       if (prevState) {
         setNodes(prevState.nodes);
