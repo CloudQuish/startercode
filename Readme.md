@@ -127,6 +127,6 @@ With these tools and solutions, the project offers an interactive and scalable d
 
 ## Screenshots:
 
-![HonestValue UI](screenshots/ss1.png "HonestValue Screenshot")
-![HonestValue UI](screenshots/ss3.png "HonestValue Screenshot")
-![Diagram Builder UI](screenshots/ss2.png "Diagram Builder Screenshot")
+![HonestValue UI](./public/screenshots/ss1.png "HonestValue Screenshot")
+![HonestValue UI](./public/screenshots/ss3.png "HonestValue Screenshot")
+![Diagram Builder UI](./public/screenshots/ss2.png "Diagram Builder Screenshot")
