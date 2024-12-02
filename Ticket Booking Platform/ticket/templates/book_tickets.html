@@ -54,12 +54,13 @@
         <select class="form-select-sm" id="gateway" name="gateway">
             <option value="esewa">Esewa</option>
             <option value="khalti">Khalti</option>
-            <option value="khalti">ConnectIPS</option>
+            <option value="connectips">ConnectIPS</option>
         </select>
     </div>
 
     <div class="d-flex justify-content-center m-2">
         <button type="submit" class="btn btn-primary">Book Now</button>
+        <span id="counter"></span>
     </div>
 </form>
 
@@ -78,6 +79,29 @@
         amount = price * tickets;
         document.getElementById("total").value = amount;
     }
+
+
+    function countdown() {
+        var seconds = 59;
+        function tick() {
+          var counter = document.getElementById("counter");
+          seconds--;
+          counter.innerHTML =
+            "0:" + (seconds < 10 ? "0" : "") + String(seconds);
+          if (seconds > 0) {
+            setTimeout(tick, 1000);
+          } else {
+                window.location.href = "/failed/{{event.id}}/";
+          }
+        }
+        tick();
+      }
+      countdown();
+
+    // window.setTimeout(function(){
+    //     window.location.href = "/failed/{{event.id}}/";
+    // }, 60000);
+
 </script>
 
 

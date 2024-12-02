@@ -24,6 +24,7 @@
                 <td>{{user.email}}</td>
                 <td>{{user.role}}</td>
                 <td>
+                    <a type="button" href="/edit_user/{{user.id}}"><i class="bi bi-pencil-fill" style="border: 2px solid black; padding: 2px;color:black;"></i></a>
                     <button type="button" class="Close" onclick="deleteUser('{{user.id}}')">&times;</button>
                 </td>
             </tr>

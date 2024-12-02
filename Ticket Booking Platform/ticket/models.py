@@ -30,6 +30,8 @@ class Order(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
     status = db.Column(db.String(20), default="PENDING") 
     number_of_tickets = db.Column(db.Integer)
+    amount = db.Column(db.Integer)
+    gateway = db.Column(db.String(20)) 
 
 
 class Notification(db.Model):

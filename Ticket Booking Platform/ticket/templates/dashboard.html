@@ -3,7 +3,7 @@
 
 {% block content %} 
 
-<div class="row">
+<div class="row m-4">
 <div class="col-sm-4 mb-3 mb-sm-0">
     <div class="card">
     <div class="card-body">
@@ -30,12 +30,12 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row m-4">
     <div class="col-sm-4 mb-3 mb-sm-0">
         <div class="card">
         <div class="card-body">
             <h5 class="card-title">Total Events</h5>
-            <p class="card-text"></p>
+            <p class="card-text">{{data[3]}}</p>
         </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
         <div class="card">
             <div class="card-body">
             <h5 class="card-title">Total Tickets</h5>
-            <p class="card-text"></p>
+            <p class="card-text">{{data[4]}}</p>
             </div>
         </div>
         </div>
@@ -51,36 +51,30 @@
         <div class="card">
             <div class="card-body">
             <h5 class="card-title">Total Cost</h5>
-            <p class="card-text"></p>
+            <p class="card-text">{{data[5]}}</p>
             </div>
         </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row m-4">
         <div class="col-sm-4 mb-3 mb-sm-0">
             <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Tickets Booked</h5>
-                <p class="card-text"></p>
+                <h5 class="card-title">Total tickets sold</h5>
+                <p class="card-text">{{data[6]}}</p>
             </div>
             </div>
         </div>
         <div class="col-sm-4 mb-3 mb-sm-0">
             <div class="card">
                 <div class="card-body">
-                <h5 class="card-title">Tickets on hold</h5>
-                <p class="card-text"></p>
+                <h5 class="card-title">Tickets amount collected</h5>
+                <p class="card-text">{{data[7]}}</p>
                 </div>
             </div>
             </div>
             <div class="col-sm-4 mb-3 mb-sm-0">
-            <div class="card">
-                <div class="card-body">
-                <h5 class="card-title">Total Amount Collected</h5>
-                <p class="card-text"></p>
-                </div>
-            </div>
             </div>
         </div>
 

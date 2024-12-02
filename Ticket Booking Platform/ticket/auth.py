@@ -74,6 +74,37 @@ def register():
 
     return render_template("register.html", user=current_user)
 
+
+@auth.route('/edit_user/<int:user_id>/', methods=['GET', 'POST'])
+def edit_user(user_id):
+    if request.method == 'GET':
+        edit_user = User.query.filter_by(id=user_id).first()
+        return render_template("edit_users.html", user=current_user, edit_user=edit_user)
+    
+    if request.method == 'POST':
+        name = request.form.get('name')
+        role = request.form.get('role')
+
+        if role == None:
+            role = 'user'
+
+        if len(name) < 1:
+            flash('Name is empty', category='error')
+
+
+        else:
+            edit_user = User.query.filter_by(id=user_id).first()
+            edit_user.name=name
+            edit_user.role=role
+            db.session.commit()
+            flash('User edited succesfully', category='success')
+            # login_user(new_user, remember=True)
+            return redirect(url_for('auth.login'))           
+
+
+    return render_template("register.html", user=current_user)
+
+
 @auth.route('/delete_user', methods=['POST'])
 def delete_user():
     user = json.loads(request.data)

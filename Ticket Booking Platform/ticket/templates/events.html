@@ -36,6 +36,7 @@
                 </th>  
                 <th>
                     {% if user.role == 'admin' %}
+                        <a type="button" href="/edit_event/{{event.id}}"><i class="bi bi-pencil-fill" style="border: 2px solid black; padding: 2px;color:black;"></i></a>    
                         <button type="button" class="Close" onclick="deleteEvent('{{event.id}}')">&times;</button>
                     {% endif %}
                 </th>
