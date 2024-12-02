@@ -1,3 +1,15 @@
+## **Applicant Details**
+
+- **Name**: Milan Prajapati
+- **Email**: mln.praz12@gmail.com
+- **Phone Number**: 9745661480
+- **Role Applied For**: Frontend Developer
+- **Address**: Thimi, Bhaktapur
+- **GitHub Profile**: https://github.com/MilanPraz
+- **LinkedIn Profile**: https://www.linkedin.com/in/milan-praz-a565ba270/
+- **Resume**: [Link to Updated Resume]
+- **Additional Links**: milanprajapati.com.np
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -106,7 +118,7 @@ With these tools and solutions, the project offers an interactive and scalable d
 | **Date**   | **Time Spent (hrs)** | **Task Description**                                                                                    |
 | ---------- | -------------------- | ------------------------------------------------------------------------------------------------------- |
 | 2024-11-30 | 3                    | Created the Hero section from Figma design.                                                             |
-| 2024-12-01 | 8                    | Completed cloning the webpage from Figma design.                                                        |
+| 2024-12-01 | 8                    | Completed the full cloning of a webpage from Figma design, including layout, structure, and responsive  |
 | 2024-12-02 | 1                    | Started working on the second project: Diagram Builder.                                                 |
 | 2024-12-02 | 3                    | Explored React Flow documentation and created sample nodes using dummy data.                            |
 | 2024-12-02 | 4                    | Designed and styled the Diagram Builder UI; integrated React Flow for rendering nodes and edges.        |
