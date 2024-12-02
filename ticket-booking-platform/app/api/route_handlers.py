@@ -26,6 +26,9 @@ from app.services.stripe import StripeWebhookService
 from app.services.kafka_producer import KafkaEventProducer
 from app.models.ticket import Ticket, TicketStatus
 import logging
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 logger = logging.getLogger(__name__)
 
@@ -128,6 +131,55 @@ class UserView:
 
         return updated_user
 
+    @classmethod
+    async def login(
+        cls,
+        form_data: OAuth2PasswordRequestForm = Depends(),
+        db: Session = Depends(get_db),
+    ):
+        user_repository = UserSqlRepository(db)
+
+        # Authenticate user
+        user = user_repository.get_user_by_email(form_data.username)
+        if not user or not user_repository.pwd_context.verify(
+            form_data.password, user.hashed_password
+        ):
+            raise HTTPException(status_code=400, detail="Invalid username or password.")
+
+        # Generate tokens
+        access_token = user_repository.create_access_token(str(user.id))
+        refresh_token = user_repository.create_refresh_token(str(user.id))
+        return {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "token_type": "bearer",
+        }
+
+    @classmethod
+    async def refresh_token(cls, refresh_token: str, db: Session = Depends(get_db)):
+        user_repository = UserSqlRepository(db)
+
+        # Decode refresh token
+        user_id = user_repository.decode_token(refresh_token, expected_type="refresh")
+        user = user_repository.get_user(user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found.")
+
+        # Generate new access token
+        access_token = user_repository.create_access_token(str(user.id))
+        return {"access_token": access_token, "token_type": "bearer"}
+
+    @classmethod
+    async def get_current_user(
+        cls, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
+    ):
+        user_repository = UserSqlRepository(db)
+        user_id = user_repository.decode_access_token(token)
+        user = user_repository.get_user(user_id)
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found.")
+        return user
+
 
 class BookingView:
     @classmethod
@@ -135,10 +187,13 @@ class BookingView:
         cls,
         request: Request,
         event_id: uuid.UUID,
-        user_id: uuid.UUID,
+        # user_id: uuid.UUID,
         quantity: int,
         db: Session = Depends(get_db),
     ):
+        user = getattr(request.state, "user", None)
+        if not user:
+            raise HTTPException(status_code=401, detail="Authentication required.")
 
         ticket_repo = TicketRepository(db)
         event_repo = EventSqlRepository(db)
@@ -186,7 +241,7 @@ class BookingView:
             logger.info(f"Stripe session created: {stripe_tracking_id}")
             # Create an order in the database
             order = order_repo.create_order(
-                user_id=user_id,
+                user_id=user.id,
                 event_id=event_id,
                 stripe_session_id=stripe_tracking_id,
             )

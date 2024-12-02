@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     EMAIL_HOST_USER: str
     EMAIL_HOST_PASSWORD: str
     DEFAULT_FROM_EMAIL: str
+    JWT_SECRET_KEY: str
 
     class Config:
         env_file = ".env"

@@ -56,6 +56,24 @@ router.add_api_route(
     description="Retrieve a paginated list of users, providing page number and size.",
 )
 
+router.add_api_route(
+    path="/token/",
+    endpoint=UserView.login,
+    methods=["POST"],
+    tags=["Authentication"],
+    summary="User login",
+    description="Authenticate a user and retrieve access and refresh tokens.",
+)
+
+router.add_api_route(
+    path="/token/refresh/",
+    endpoint=UserView.refresh_token,
+    methods=["POST"],
+    tags=["Authentication"],
+    summary="Refresh access token",
+    description="Use the refresh token to obtain a new access token.",
+)
+
 
 router.add_api_route(
     path="/users/",

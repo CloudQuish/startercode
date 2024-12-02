@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from app.core.database import engine, Base
 from app.api.routes import router as api_router
 from app.services.kafka_consumer import WaitlistProcessor, NotificationService
-
+from app.core.middlewares.auth_middlewares import AuthMiddleware
 
 app = FastAPI()
 
@@ -12,6 +12,7 @@ Base.metadata.create_all(bind=engine)
 
 # Include routers
 app.include_router(api_router)
+app.add_middleware(AuthMiddleware)
 
 
 notification_service = NotificationService()
@@ -23,6 +24,7 @@ threads = []
 
 @app.on_event("startup")
 def startup_event():
+
     # Start the Kafka consumer for NotificationService in a separate thread
     notification_thread = threading.Thread(
         target=notification_service.start_consuming, daemon=True
