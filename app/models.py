@@ -44,6 +44,8 @@ class Events(Base):
     created_at = Column(TIMESTAMP, default=func.now(), nullable=False)
     updated_at = Column(TIMESTAMP, default=func.now(), onupdate=func.now(), nullable=False)
 
+    tickets = relationship("Tickets", back_populates="event")
+
     def __repr__(self):
         return f"{self.name}"
 
