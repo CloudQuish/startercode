@@ -124,3 +124,9 @@ With these tools and solutions, the project offers an interactive and scalable d
 | 2024-12-02 | 4                    | Designed and styled the Diagram Builder UI; integrated React Flow for rendering nodes and edges.        |
 | 2024-12-02 | 4                    | Debugged and resolved sidebar responsiveness and history tracking issues; gave a final touch to the UI. |
 | 2024-12-02 | 2                    | Hosted the project on Vercel and debugged build errors.                                                 |
+
+## Screenshots:
+
+![HonestValue UI](screenshots/ss1.png "HonestValue Screenshot")
+![HonestValue UI](screenshots/ss3.png "HonestValue Screenshot")
+![Diagram Builder UI](screenshots/ss2.png "Diagram Builder Screenshot")
