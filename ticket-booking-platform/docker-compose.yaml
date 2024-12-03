@@ -94,7 +94,7 @@ services:
       - KAFKA_BOOTSTRAP_SERVERS=kafka:${KAFKA_PORT}
     volumes:
       - .:/app
-    command: celery -A app.celery_app worker --loglevel=info
+    command: celery -A app.celery_app worker --loglevel=info -Q worker
 
 
 volumes:

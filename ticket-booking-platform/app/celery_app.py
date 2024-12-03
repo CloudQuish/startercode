@@ -10,5 +10,5 @@ celery_app = Celery(
 )  # Ensure the tasks module is included
 
 
-celery_app.conf.task_routes = {"app.tasks.send_email_task": {"queue": "default"}}
+celery_app.conf.task_routes = {"app.tasks.send_email_task": {"queue": "worker"}}
 celery_app.conf.timezone = "UTC"
