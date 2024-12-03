@@ -131,4 +131,9 @@ As I am currently involved in another company as a backend dev, I had very limit
 |------------|------------|-------------------------|
 | 2024-12-01 | 5 hours    | Redis integration within ticket booking and other features like user creation, event creation, ticket booking and testing & error handeling to some level|
 | 2024-12-02 | 4 hours    | Stripe integration within ticket booking and other features like getting event details, admin right dependency, admin creation, getting customer orders, testing & error handeling to some level  |
-| 2024-12-03 | 0 hours    | I couldn't do anything due to my other job since I am responsible for the role until I am involved in that company   |
+| 2024-12-03 | 30 mins    | I couldn't do anything due to my other job since I am responsible for the role until I am involved in that company. However, I tested the built system through postman and saved the example response for each request in postman.   |
+
+## Further Improvement in current system
+- A new endpoint to list the tickets of the events
+- Locking time can be set manually instead of specifying from the code
+- A new endpoint to get the list of current user's orders
