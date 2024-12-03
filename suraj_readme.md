@@ -80,7 +80,7 @@ Follow the steps below to set up and run the backend system:
 
 7. **Run the command to run backend:**
     ```bash
-    uvicorn app:main
+    uvicorn main:app
     ```
 *Note: Ensure redis server is active before running the backend server*
 
