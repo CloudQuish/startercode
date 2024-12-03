@@ -6,7 +6,7 @@ from celery.exceptions import MaxRetriesExceededError
 
 # Celery task for sending emails with retry logic
 @celery_app.task(
-    bind=True, max_retries=3, default_retry_delay=60
+    bind=True, max_retries=3, default_retry_delay=60, queue="worker"
 )  # Retry 3 times with a 60-second delay
 def send_email_task(self, recipient, subject, body):
     try:

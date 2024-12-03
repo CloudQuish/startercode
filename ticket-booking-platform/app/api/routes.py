@@ -41,6 +41,7 @@ router.add_api_route(
         "Locks tickets to prevent overselling and returns a Stripe payment session "
         "link or client secret for completing the payment."
     ),
+    dependencies=[Depends(UserView.get_current_user)],
 )
 
 

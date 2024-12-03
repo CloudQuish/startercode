@@ -43,7 +43,7 @@ class KafkaEventProducer:
             "order_id": str(order_id),
             "status": status,
             "amount": amount,
-            "user_id": user_id,
+            "user_id": str(user_id),
             "timestamp": str(datetime.now()),
         }
         topic = kafka_settings.payment_notifications_topic

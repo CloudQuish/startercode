@@ -4,6 +4,8 @@ from app.core.database import engine, Base
 from app.api.routes import router as api_router
 from app.services.kafka_consumer import WaitlistProcessor, NotificationService
 from app.core.middlewares.auth_middlewares import AuthMiddleware
+from app.tasks import send_email_task
+
 
 app = FastAPI()
 
@@ -24,11 +26,15 @@ threads = []
 
 @app.on_event("startup")
 def startup_event():
+    print("Starting Kafka consumers...")
+    send_email_task.delay(recipient="thapa.qw12@gmail.com", subject="Test", body="Test")
+    print("...")
 
     # Start the Kafka consumer for NotificationService in a separate thread
     notification_thread = threading.Thread(
         target=notification_service.start_consuming, daemon=True
     )
+
     threads.append(notification_thread)
     notification_thread.start()
 

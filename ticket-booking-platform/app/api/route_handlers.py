@@ -174,7 +174,7 @@ class UserView:
         cls, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
     ):
         user_repository = UserSqlRepository(db)
-        user_id = user_repository.decode_access_token(token)
+        user_id = user_repository.decode_token(token)
         user = user_repository.get_user(user_id)
         if user is None:
             raise HTTPException(status_code=404, detail="User not found.")
@@ -322,10 +322,10 @@ class StripeWebhookView:
 
             service.handle_payment_intent_succeeded(strip_tracking_id)
             kafka_producer.publish_payment_notification(
-                order_id=order.id,
+                order_id=str(order.id),
                 status="success",
                 amount=total_amount,
-                user_id=order.user_id,
+                user_id=str(order.user_id),
             )
         elif (
             event_type == "payment_intent.payment_failed"
