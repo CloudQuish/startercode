@@ -1,7 +1,3 @@
-Here’s the setup-focused `README.md` with project information and technologies used:
-
----
-
 # Ticket Booking Platform
 
 ## Project Information
@@ -12,6 +8,9 @@ The **Ticket Booking Platform** is a backend system designed to facilitate secur
 - **Concurrency Management**: Prevent overselling tickets with a locking mechanism.
 - **Secure Payment Processing**: Integrate with Stripe for handling payments.
 - **Real-Time Notifications**: Use Kafka to manage updates about ticket availability and payment status.
+
+- **Background Task Handling**: Use Celery to manage asynchronous tasks like sending emails.
+
 
 ---
 
@@ -25,6 +24,7 @@ The **Ticket Booking Platform** is a backend system designed to facilitate secur
 - **Docker**: To containerize the application and its dependencies.
 - **Alembic**: For database migrations.
 - **Python**: The primary programming language for backend logic.
+- **Celery**: For asynchronous background task handling.
 - **Zookeeper**: To manage Kafka services.
 
 ---
@@ -37,19 +37,39 @@ The **Ticket Booking Platform** is a backend system designed to facilitate secur
 2. Clone the repository:
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/thapasamir/startercode
    cd ticket-booking-platform
    ```
 
 3. Create a `.env` file in the root directory with the following variables:
 
    ```env
-   POSTGRES_DB=ticket_booking
-   POSTGRES_USER=postgres
-   POSTGRES_PASSWORD=yourpassword
+   POSTGRES_DB=example_db
+   POSTGRES_USER=example_user
+   POSTGRES_PASSWORD=example_password
+   POSTGRES_HOST=db
+   POSTGRES_PORT=5432
+
+   SECRET_KEY=example_secret_key_12345
+
    REDIS_PORT=6379
-   STRIPE_SECRET_KEY=your_stripe_secret
-   STRIPE_WEBHOOK_SECRET=your_webhook_secret
+   REDIS_URL=redis://example_redis_host:6379/0
+
+   KAFKA_HOST=example_kafka_host
+   KAFKA_PORT=9092
+
+   STRIPE_SECRET_KEY=sk_test_example_secret_key
+   STRIPE_WEBHOOK_SECRET=whsec_example_webhook_secret
+
+   EMAIL_HOST=email-smtp.example-region.amazonaws.com
+   EMAIL_PORT=587
+   EMAIL_HOST_USER=example_email_user
+   EMAIL_HOST_PASSWORD=example_email_password
+   DEFAULT_FROM_EMAIL=Example Name <no-reply@example.com>
+   TO_EMAIL=recipient@example.com
+
+   JWT_SECRET_KEY=example_jwt_secret_key
+
    ```
 
 ### Running the Application
@@ -83,5 +103,3 @@ docker-compose down
 ```
 
 ---
-
-This `README.md` provides all necessary information to start the project and includes the technologies used. Let me know if you need more details or additional sections!
