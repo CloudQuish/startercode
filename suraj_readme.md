@@ -101,7 +101,7 @@ The locking mechanism works as follows:
    The function `acquire_ticket_lock` attempts to set a Redis key (`lock_ticket:{ticket_id}`). If the key doesn't exist, it locks the ticket using `SETNX`. If the key exists, the lock is not acquired.
 
 2. **Expiration Time**  
-   To prevent deadlocks, an expiration time is set on the lock using `expire`.
+   To prevent deadlocks, an expiration time is set on the lock using `expire`. For now the locking time `3000ms` i.e. `30s`
 
 3. **Validation**  
    In the `book_ticket` function, before acquiring the lock, it checks if the ticket is already sold or locked. If not, it proceeds to lock the ticket.
