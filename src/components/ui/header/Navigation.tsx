@@ -44,8 +44,8 @@ export default function Navigation() {
   };
 
   return (
-    <div>
-      <nav className="xl:container  relative px-4 py-4  pb-10 flex justify-between">
+    <div className=" xl:container px-2 md:px-4">
+      <nav className="   relative  py-4  pb-10 flex justify-between">
         <div className="flex gap-4 items-center">
           <Image
             src={"/home/logo.png"}

@@ -12,10 +12,10 @@ import RightSlide from "../animation/RightSlide";
 
 export default function Hero() {
   return (
-    <div className=" min-h-screen xl:container px-2 md:px-4">
+    <div className=" h-screen xl:container px-2 md:px-4">
       <div
         style={{
-          background: "url(/home/bgclip2.png) center/cover",
+          background: "url(/bgclip2-final.webp) center/cover",
         }}
         className="flex items-center justify-start px-4 md:px-16  h-screen object-cover w-full rounded-3xl relative"
       >
