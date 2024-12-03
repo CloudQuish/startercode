@@ -1,5 +1,19 @@
+## About me
+- **Name** : Samir thapa
+- **Email** : samirthapa61622845@gmail.com
+- **Role** : Backend 
+- **Address** : Hetauda,Nepal
+- **Github** : github.com/thapasamir
+- **Linkened** : https://www.linkedin.com/in/samir-thapa-73a9a31b6/
+
+
+
 # Ticket Booking Platform
 
+###
+Note : This project wont run properly if not conifigured propely, Make sure to put the http://backend_url/webhook/payment/ in stripe webhook section. 
+
+If running locally then can you ngrok to test it for webhook endpoint
 ## Project Information
 
 The **Ticket Booking Platform** is a backend system designed to facilitate secure and real-time ticket booking for events. It handles high-concurrency scenarios, processes payments securely, and provides real-time updates using an event-driven architecture.
