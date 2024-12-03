@@ -61,6 +61,10 @@ Follow the steps below to set up and run the backend system:
      ```bash
      sudo systemctl enable redis-server
      ```
+     Check redis server status:
+     ```bash
+     sudo service redis-server status
+     ```
 
 6. **Install dependencies**  
    Execute the dependency installation command to set up required packages:
