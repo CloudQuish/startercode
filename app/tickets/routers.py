@@ -10,6 +10,7 @@ from app.custom_exception import ErrorBookingTicket, EventNotFound, NoTicketsAva
 from app.db_connection import get_db
 from app.enums import TicketStatus
 from app.models import Events, Tickets
+from app.notification.kafka_notification_producer import NotificationService
 from app.tickets.schemas import TicketCreate, TicketResponse
 
 tickets_router = APIRouter(tags=["tickets"])
@@ -73,8 +74,19 @@ def book_ticket(
         for ticket in new_tickets:
             db.refresh(ticket)
 
-        # Return the first ticket (or could create a custom response)
+        notification_service = NotificationService()
+
+        notification_data = {
+            'email': current_user.email,
+            'phone_number': current_user.phone_number,
+            'event_name': event.name,
+            'event_date': event.date,
+            'ticket_count': number_of_tickets
+        }
+
+        notification_service.send_booking_notification(notification_data)
         return new_tickets[0]
+
 
     except Exception:
         db.rollback()

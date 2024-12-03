@@ -6,6 +6,7 @@ from fastapi import status, Request
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.functions import user
 from starlette.responses import JSONResponse
 
 from app.auth import auth, schemas
@@ -13,6 +14,7 @@ from app.custom_exception import EventNotFound
 from app.db_connection import get_db
 from app.enums import TicketStatus
 from app.models import Events, Tickets
+from app.notification.kafka_notification_producer import NotificationService
 from app.stripe.schemas import PaymentResponse, PaymentCreate
 
 load_dotenv()
@@ -124,7 +126,17 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
             db.add_all(new_tickets)
             db.commit()
 
-            # Optional: Send confirmation email, etc.
+            notification_service = NotificationService()
+
+            notification_data = {
+                'email': user.email,
+                'phone_number': user.phone_number,
+                'event_name': event.name,
+                'event_date': event.date,
+                'ticket_count': number_of_tickets
+            }
+
+            notification_service.send_booking_notification(notification_data)
             return JSONResponse(content={"status": "success"})
 
         except Exception as e:
