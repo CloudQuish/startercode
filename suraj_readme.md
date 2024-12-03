@@ -82,6 +82,12 @@ Follow the steps below to set up and run the backend system:
     ```bash
     uvicorn main:app
     ```
+8. **Access the APIs:**
+   ```bash
+   http://localhost:8000/docs
+   or
+   https://127.0.0.1:8000/docs
+   ```
 *Note: Ensure redis server is active before running the backend server*
 
 ## How to set the admin?
