@@ -5,6 +5,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 from starlette import status
 
+from app.auth import schemas, auth
 from app.custom_exception import ErrorBookingTicket, EventNotFound, NoTicketsAvailable, TicketNotFound, TicketsAlreadyBooked
 from app.db_connection import get_db
 from app.enums import TicketStatus
@@ -15,10 +16,16 @@ tickets_router = APIRouter(tags=["tickets"])
 
 
 @tickets_router.post("/book/", response_model=TicketResponse)
-def book_ticket(ticket_data: TicketCreate, number_of_tickets: int = Query(1, gt=0, le=10), db: Session = Depends(get_db)):
+def book_ticket(
+    ticket_data: TicketCreate,
+    number_of_tickets: int = Query(1, gt=0, le=10),
+    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+    db: Session = Depends(get_db)
+):
     """
     Book tickets for an event
 
+    - Requires logged-in and verified user
     - Checks event availability
     - Creates tickets for the user
     - Manages ticket inventory
@@ -30,7 +37,10 @@ def book_ticket(ticket_data: TicketCreate, number_of_tickets: int = Query(1, gt=
         raise EventNotFound
 
     # Check if enough tickets are available
-    booked_tickets = db.query(Tickets).filter(Tickets.event_id == ticket_data.event_id, Tickets.status == TicketStatus.BOOKED.value).count()
+    booked_tickets = db.query(Tickets).filter(
+        Tickets.event_id == ticket_data.event_id,
+        Tickets.status == TicketStatus.BOOKED.value
+    ).count()
 
     if booked_tickets + number_of_tickets > event.total_tickets:
         raise NoTicketsAvailable
@@ -38,7 +48,7 @@ def book_ticket(ticket_data: TicketCreate, number_of_tickets: int = Query(1, gt=
     # Check if user has already booked tickets for this event
     existing_tickets = db.query(Tickets).filter(
         Tickets.event_id == ticket_data.event_id,
-        Tickets.user_id == ticket_data.user_id,
+        Tickets.user_id == current_user.id,  # Use current user's ID
         Tickets.status == TicketStatus.BOOKED.value
     ).count()
 
@@ -50,7 +60,7 @@ def book_ticket(ticket_data: TicketCreate, number_of_tickets: int = Query(1, gt=
         new_tickets = [
             Tickets(
                 event_id=ticket_data.event_id,
-                user_id=ticket_data.user_id,
+                user_id=current_user.id,  # Use current user's ID
                 number_of_tickets=number_of_tickets,
                 status=TicketStatus.BOOKED.value
             ) for _ in range(number_of_tickets)
@@ -72,16 +82,25 @@ def book_ticket(ticket_data: TicketCreate, number_of_tickets: int = Query(1, gt=
 
 
 @tickets_router.delete("/{ticket_id}/cancel/", status_code=204)
-def cancel_ticket(ticket_id: int, user_id: int, db: Session = Depends(get_db)):
+def cancel_ticket(
+    ticket_id: int,
+    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+    db: Session = Depends(get_db)
+):
     """
     Cancel booked tickets
 
+    - Requires logged-in and verified user
     - Validates ticket ownership
     - Updates ticket status
     - Allows cancellation of multi-ticket bookings
     """
     # Fetch tickets for this booking
-    tickets = db.query(Tickets).filter(Tickets.id == ticket_id, Tickets.user_id == user_id, Tickets.status == TicketStatus.BOOKED.value).all()
+    tickets = db.query(Tickets).filter(
+        Tickets.id == ticket_id,
+        Tickets.user_id == current_user.id,  # Use current user's ID
+        Tickets.status == TicketStatus.BOOKED.value
+    ).all()
 
     if not tickets:
         raise TicketNotFound
@@ -99,23 +118,34 @@ def cancel_ticket(ticket_id: int, user_id: int, db: Session = Depends(get_db)):
 
 
 @tickets_router.get("/list/", response_model=List[TicketResponse])
-def list_user_tickets(user_id: int, db: Session = Depends(get_db)):
+def list_user_tickets(
+    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+    db: Session = Depends(get_db)
+):
     """
-    Retrieve tickets for a specific user
+    Retrieve tickets for the current logged-in user
 
     - List booked tickets
     - Shows total number of tickets purchased
     """
-    tickets = db.query(Tickets).filter(Tickets.user_id == user_id, Tickets.status == TicketStatus.BOOKED.value).all()
+    tickets = db.query(Tickets).filter(
+        Tickets.user_id == current_user.id,
+        Tickets.status == TicketStatus.BOOKED.value
+    ).all()
 
     return tickets
 
 
 @tickets_router.get("/events/{event_id}/tickets/", response_model=List[TicketResponse])
-def get_event_tickets(event_id: int, db: Session = Depends(get_db)):
+def get_event_tickets(
+    event_id: int,
+    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+    db: Session = Depends(get_db)
+):
     """
-    Retrieve tickets for a specific event
+    Retrieve tickets for a specific event for the current user
 
+    - Requires logged-in and verified user
     - List booked tickets
     - Show ticket inventory
     """
@@ -125,16 +155,25 @@ def get_event_tickets(event_id: int, db: Session = Depends(get_db)):
         raise EventNotFound
 
     # Get booked tickets for the event
-    tickets = db.query(Tickets).filter(Tickets.event_id == event_id, Tickets.status == TicketStatus.BOOKED.value).all()
+    tickets = db.query(Tickets).filter(
+        Tickets.event_id == event_id,
+        Tickets.user_id == current_user.id,
+        Tickets.status == TicketStatus.BOOKED.value
+    ).all()
 
     return tickets
 
 
 @tickets_router.get("/stats/", response_model=Dict[str, int])
-def get_event_ticket_stats(event_id: int, db: Session = Depends(get_db)) -> Dict[str, int]:
+def get_event_ticket_stats(
+    event_id: int,
+    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+    db: Session = Depends(get_db)
+) -> Dict[str, int]:
     """
     Get ticket statistics for an event
 
+    - Requires logged-in and verified user
     - Total tickets
     - Booked tickets
     - Available tickets

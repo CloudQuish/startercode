@@ -20,6 +20,9 @@ class User(Base):
     created_at = Column(TIMESTAMP, default=func.now(), nullable=False)
     updated_at = Column(TIMESTAMP, default=func.now(), onupdate=func.now(), nullable=False)
 
+    events = relationship("Events", back_populates="user")
+
+
     def __repr__(self):
         return f"{self.email}"
 
@@ -44,6 +47,9 @@ class Events(Base):
     created_at = Column(TIMESTAMP, default=func.now(), nullable=False)
     updated_at = Column(TIMESTAMP, default=func.now(), onupdate=func.now(), nullable=False)
 
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+
+    user = relationship("User", back_populates="events")
     tickets = relationship("Tickets", back_populates="event")
 
     def __repr__(self):

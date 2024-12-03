@@ -8,6 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
+from app.auth import auth, schemas
 from app.custom_exception import EventNotFound
 from app.db_connection import get_db
 from app.enums import TicketStatus
@@ -23,10 +24,15 @@ payment_router = APIRouter(tags=["payments"])
 
 
 @payment_router.post("/create-payment-intent/", response_model=PaymentResponse)
-def create_payment_intent( payment_data: PaymentCreate, db: Session = Depends(get_db)):
+def create_payment_intent(
+    payment_data: PaymentCreate,
+    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+    db: Session = Depends(get_db)
+):
     """
     Create a Stripe Payment Intent for ticket purchase
 
+    - Requires logged-in and verified user
     - Calculates total price
     - Creates payment intent
     - Prepares for ticket booking
@@ -42,12 +48,12 @@ def create_payment_intent( payment_data: PaymentCreate, db: Session = Depends(ge
     try:
         # Create Stripe Payment Intent
         payment_intent = stripe.PaymentIntent.create(
-            amount=total_price * 100,  # Convert to cents
+            amount=int(total_price * 100),  # Convert to cents
             currency="usd",
             metadata={
                 "event_id": payment_data.event_id,
                 "number_of_tickets": payment_data.number_of_tickets,
-                "user_id": payment_data.user_id
+                "user_id": current_user.id  # Use current user's ID
             },
             # Optional: add more configuration like payment method types
             payment_method_types=["card"]
@@ -96,6 +102,14 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
         user_id = int(metadata.get('user_id'))
 
         try:
+            # Verify event exists and user is valid
+            event = db.query(Events).filter(Events.id == event_id).first()
+            if not event:
+                return JSONResponse(
+                    status_code=400,
+                    content={"error": "Event not found"}
+                )
+
             # Book tickets
             new_tickets = [
                 Tickets(

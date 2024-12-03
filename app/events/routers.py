@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
+from app.auth import schemas, auth
 from app.custom_exception import EventNotFound
 from app.db_connection import get_db
 from app.events.schemas import EventCreate, EventResponse, EventUpdate
@@ -16,7 +17,7 @@ events_router = APIRouter(tags=["events"])
 
 
 @events_router.post("/create/", response_model=EventResponse)
-def create_event(event: EventCreate, db: Session = Depends(get_db)):
+def create_event(event: EventCreate, current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),  db: Session = Depends(get_db)):
     """
     Create a new event
 
@@ -30,7 +31,8 @@ def create_event(event: EventCreate, db: Session = Depends(get_db)):
             venue=event.venue,
             price=event.price,
             date=event.date,
-            total_tickets=event.total_tickets
+            total_tickets=event.total_tickets,
+            user_id=current_user.id
         )
 
         db.add(db_event)
@@ -41,8 +43,11 @@ def create_event(event: EventCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@events_router.get("/list/", response_model=List[EventResponse])
-def list_events(skip: int = Query(0, ge=0), limit: int = Query(100, ge=1, le=1000), search: Optional[str] = None, db: Session = Depends(get_db)):
+@events_router.get("/list/",  response_model=List[EventResponse])
+def list_events(skip: int = Query(0, ge=0),
+                limit: int = Query(100, ge=1, le=1000),
+                current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+                search: Optional[str] = None, db: Session = Depends(get_db)):
     """
     Retrieve list of events
 
@@ -61,7 +66,9 @@ def list_events(skip: int = Query(0, ge=0), limit: int = Query(100, ge=1, le=100
 
 
 @events_router.get("/{event_id}/", response_model=EventResponse)
-def get_event(event_id: int, db: Session = Depends(get_db)):
+def get_event(event_id: int,
+              current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+              db: Session = Depends(get_db)):
     """
     Retrieve a specific event by ID
     """
@@ -74,7 +81,10 @@ def get_event(event_id: int, db: Session = Depends(get_db)):
 
 
 @events_router.put("/{event_id}/", response_model=EventResponse)
-def update_event(event_id: int, event: EventUpdate, db: Session = Depends(get_db)):
+def update_event(event_id: int,
+                 event: EventUpdate,
+                 current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+                 db: Session = Depends(get_db)):
     """
     Update an existing event
 
@@ -100,7 +110,7 @@ def update_event(event_id: int, event: EventUpdate, db: Session = Depends(get_db
 
 
 @events_router.delete("/{event_id}/", status_code=204)
-def delete_event(event_id: int, db: Session = Depends(get_db)):
+def delete_event(event_id: int, current_user: schemas.UserResponse = Depends(auth.get_current_verified_user), db: Session = Depends(get_db)):
     """
     Delete an event
 
