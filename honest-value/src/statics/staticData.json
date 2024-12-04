@@ -1,0 +1,145 @@
+{
+  "faqs": [
+    {
+      "id": 0,
+      "question": "Can I Use The Fitness Dashboard On My Mobile Device?",
+      "answer": "Yes, Our Fitness Dashboard Is Fully Optimized For Mobile Devices. You Can Access All Features And Track Your Workouts On The Go Using Your Smartphone Or Tablet. Simply Download Our App From The App Store Or Google Play"
+    },
+    {
+      "id": 1,
+      "question": "How Do I Get Started With The Fitness Dashboard?",
+      "answer": "Getting started is simple. Create an account, set your fitness goals, and begin tracking your workouts. Our intuitive interface will guide you through the process."
+    },
+    {
+      "id": 2,
+      "question": "How Does The Personalized Insights Feature Work?",
+      "answer": "Our AI-powered system analyzes your workout patterns and provides tailored recommendations to help you achieve your fitness goals more effectively."
+    },
+    {
+      "id": 3,
+      "question": "What Types Of Workouts Can I Track With The Fitness Dashboard?",
+      "answer": "You can track a wide variety of workouts including cardio, strength training, yoga, and more. Our system supports both indoor and outdoor activities."
+    },
+    {
+      "id": 4,
+      "question": "Is My Data Safe And Secure?",
+      "answer": "Yes, we use industry-standard encryption and security measures to protect your personal information and workout data."
+    }
+  ],
+  "stats": [
+    { "value": "$1,148", "label": "Average Savings", "icon": "Calculator" },
+    { "value": "4.9/5", "label": "Customer Satisfaction", "icon": "Star" },
+    { "value": "95%", "label": "Success Rate", "icon": "TrendingUp" }
+  ],
+  "benefits": [
+    "No Upfront Costs",
+    "No Credit Card Required",
+    "Quick Signup: Less Than 30 Minute",
+    "Pay 25% Of What You Save. No Hidden Costs"
+  ],
+  "features": [
+    {
+      "title": "Seamless Experience",
+      "description": "Say goodbye to the days of complicated paperwork and endless back-and-forth with tax authorities. At JumboTax, we prioritize your convenience. Provide us with a few essential details, and let us handle the rest. Filing property tax appeals has never been this easy!",
+      "image": "/images/tax.png"
+    },
+    {
+      "title": "Smart Technology",
+      "description": "Say goodbye to the days of complicated paperwork and endless back-and-forth with tax authorities. At JumboTax, we prioritize your convenience. Provide us with a few essential details, and let us handle the rest. Filing property tax appeals has never been this easy!",
+      "image": "/images/tax.png"
+    },
+    {
+      "title": "Expert Support",
+      "description": "Say goodbye to the days of complicated paperwork and endless back-and-forth with tax authorities. At JumboTax, we prioritize your convenience. Provide us with a few essential details, and let us handle the rest. Filing property tax appeals has never been this easy!",
+      "image": "/images/tax.png"
+    }
+  ],
+  "subItems": [
+    { "id": 1, "label": "Property Search" },
+    { "id": 2, "label": "Data Gathering" },
+    { "id": 3, "label": "AI Analysis" },
+    { "id": 4, "label": "Appeal Process" },
+    { "id": 5, "label": "Tax Saving" }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "title": "Provide Your Property Address and Details",
+      "description": "To kickstart the process, simply provide us with your property address. Our advanced system will swiftly retrieve all the relevant details related to your property. This initial step ensures we have the necessary information to proceed effectively, showing you your estimated tax savings right away.",
+      "image": "/images/gallery.png"
+    },
+    {
+      "id": 2,
+      "title": "Provide Your Property Address and Details",
+      "description": "To kickstart the process, simply provide us with your property address. Our advanced system will swiftly retrieve all the relevant details related to your property. This initial step ensures we have the necessary information to proceed effectively, showing you your estimated tax savings right away.",
+      "image": "/images/gallery.png"
+    },
+    {
+      "id": 3,
+      "title": "Provide Your Property Address and Details",
+      "description": "To kickstart the process, simply provide us with your property address. Our advanced system will swiftly retrieve all the relevant details related to your property. This initial step ensures we have the necessary information to proceed effectively, showing you your estimated tax savings right away.",
+      "image": "/images/gallery.png"
+    },
+    {
+      "id": 4,
+      "title": "Provide Your Property Address and Details",
+      "description": "To kickstart the process, simply provide us with your property address. Our advanced system will swiftly retrieve all the relevant details related to your property. This initial step ensures we have the necessary information to proceed effectively, showing you your estimated tax savings right away.",
+      "image": "/images/gallery.png"
+    },
+    {
+      "id": 5,
+      "title": "Provide Your Property Address and Details",
+      "description": "To kickstart the process, simply provide us with your property address. Our advanced system will swiftly retrieve all the relevant details related to your property. This initial step ensures we have the necessary information to proceed effectively, showing you your estimated tax savings right away.",
+      "image": "/images/gallery.png"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "name": "Jenny Wilson",
+      "role": "Solar energy service",
+      "image": "/images/jenny.png",
+      "content": "Before discovering JumboTax, navigating property taxes felt like a relentless uphill battle. Thanks to their advanced AI-driven approach, I saved significantly on my commercial properties. Their transparent and efficient system is an absolute game-changer for business owners like me."
+    },
+    {
+      "id": 2,
+      "name": "Dianne Russell",
+      "role": "EV service",
+      "image": "/images/diana.png",
+      "content": "Before discovering JumboTax, navigating property taxes felt like a relentless uphill battle. Thanks to their advanced AI-driven approach, I saved significantly on my commercial properties. Their transparent and efficient system is an absolute game-changer for business owners like me."
+    },
+    {
+      "id": 3,
+      "name": "Cody Fisher",
+      "role": "Solar energy service",
+      "image": "/images/cody.png",
+      "content": "Before discovering JumboTax, navigating property taxes felt like a relentless uphill battle. Thanks to their advanced AI-driven approach, I saved significantly on my commercial properties. Their transparent and efficient system is an absolute game-changer for business owners like me."
+    }
+  ],
+  "navItems": [
+    { "label": "Home" },
+    { "label": "How It Works" },
+    { "label": "About Us" },
+    { "label": "Contact" }
+  ],
+  "companyLinks": [
+    { "label": "About", "href": "#" },
+    { "label": "Pricing", "href": "#" },
+    { "label": "Demo", "href": "#" }
+  ],
+  "pricingLinks": [
+    { "label": "Blog", "href": "#" },
+    { "label": "Events", "href": "#" },
+    { "label": "Tool Library", "href": "#" }
+  ],
+  "contactLinks": [
+    { "label": "Terms of Use", "href": "#" },
+    { "label": "Privacy Policy", "href": "#" }
+  ],
+  "socialLinks": [
+    { "label": "Instagram", "href": "#" },
+    { "label": "LinkedIn", "href": "#" },
+    { "label": "Twitter", "href": "#" },
+    { "label": "Github", "href": "#" }
+  ]
+}
