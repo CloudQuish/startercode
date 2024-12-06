@@ -85,6 +85,12 @@ class TicketRepository:
             result.scalar_one_or_none()
         )  # Returns a single ticket or None if not found
 
+    def update_ticket_status(self, ticket_id: UUID, status: TicketStatus):
+        """Update the status of a ticket."""
+        query = update(Ticket).where(Ticket.id == ticket_id).values(status=status)
+        self.db.execute(query)
+        self.db.commit()
+
     def update_ticket_status_by_event(self, event_id: UUID, status: TicketStatus):
         self.db.query(Ticket).filter(Ticket.event_id == event_id).update(
             {"status": status}

@@ -327,10 +327,10 @@ class StripeWebhookView:
                 amount=total_amount,
                 user_id=str(order.user_id),
             )
-        elif (
-            event_type == "payment_intent.payment_failed"
-            or event_type == "payment_intent.cancelled"
-        ):
+        elif event_type in [
+            "payment_intent.cancelled",
+            "payment_intent.payment_failed",
+        ]:
             ticket_repo.release_tickets(ticket_ids)
             print(f"Releasing locks for tickets: {ticket_ids}", flush=True)
             for ticket_id in ticket_ids:
