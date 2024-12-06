@@ -23,10 +23,10 @@ sticky-notes-whiteboard/
 │   └── .env
 ├── frontend/
 │   ├── Dockerfile
-│   ├── src/
+│   ├── src/ 
+│   ├── nginx.conf
 │   ├── public/
 │   └── package.json
-├── nginx.conf
 ├── docker-compose.yml
 └── README.md
 
