@@ -61,9 +61,9 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
-          cd /path/to/your/app
+          cd 
           export PORT=${{ secrets.PORT }}
           export POSTGRES_DATABASE_URL=${{ secrets.POSTGRES_DATABASE_URL }}
           export JWT_SECRET=${{ secrets.JWT_SECRET }}
-          docker-compose down
-          docker-compose up -d --build
+          docker compose down
+          docker compose up -d --build
