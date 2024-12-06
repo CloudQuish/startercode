@@ -327,6 +327,11 @@ class StripeWebhookView:
                 amount=total_amount,
                 user_id=str(order.user_id),
             )
+            for ticket_id in ticket_ids:
+                lock_key = f"ticket_{ticket_id}_lock"
+                redis_client.release_lock(lock_key)
+                print(f"Lock released for ticket: {ticket_id}", flush=True)
+
         elif event_type in [
             "payment_intent.cancelled",
             "payment_intent.payment_failed",
