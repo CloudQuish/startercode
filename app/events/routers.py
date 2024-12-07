@@ -80,7 +80,7 @@ def get_event(event_id: int,
     return event
 
 
-@events_router.put("/{event_id}/", response_model=EventResponse)
+@events_router.patch("/{event_id}/", response_model=EventResponse)
 def update_event(event_id: int,
                  event: EventUpdate,
                  current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
@@ -92,21 +92,26 @@ def update_event(event_id: int,
     - Updates event in database
     """
     event_update = db.query(Events).filter(Events.id == event_id).first()
-    try:
-        # Update only provided fields
-        update_data = event_update.model_dump(exclude_unset=True)
 
+    if not event_update:
+        raise HTTPException(status_code=404, detail="Event not found")
+
+    try:
+        # Convert incoming update data to a dictionary, excluding unset fields
+        update_data = event.model_dump(exclude_unset=True)
+
+        # Update the existing database model with the new data
         for key, value in update_data.items():
-            setattr(event, key, value)
+            setattr(event_update, key, value)
 
         db.commit()
-        db.refresh(update_data)
+        db.refresh(event_update)
 
-        return update_data
+        return event_update
 
     except Exception as e:
         db.rollback()
-        raise ValueError(f"Error updating event: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error updating event: {str(e)}")
 
 
 @events_router.delete("/{event_id}/", status_code=204)
@@ -119,12 +124,12 @@ def delete_event(event_id: int, current_user: schemas.UserResponse = Depends(aut
     event = db.query(Events).filter(Events.id == event_id).first()
 
     if not event:
-        return False
+        raise EventNotFound
 
     try:
         db.delete(event)
         db.commit()
-        return True
+        return {"message": "Events Successfully Deleted"}
 
     except Exception as e:
         db.rollback()

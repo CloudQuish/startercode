@@ -79,7 +79,7 @@ async def get_or_create_google_oauth_user(db: Session, user_info: dict) -> User:
             last_name=user_info.get('family_name'),
             email=email,
             is_verified=True,
-            phone_number=0,
+            phone_number=0000000000,
             address="",
             password=""
         )

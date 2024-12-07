@@ -18,10 +18,9 @@ tickets_router = APIRouter(tags=["tickets"])
 
 @tickets_router.post("/book/", response_model=TicketResponse)
 def book_ticket(
-    ticket_data: TicketCreate,
-    number_of_tickets: int = Query(1, gt=0, le=10),
-    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
-    db: Session = Depends(get_db)
+        ticket_data: TicketCreate,  # Now includes number_of_tickets
+        current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+        db: Session = Depends(get_db)
 ):
     """
     Book tickets for an event
@@ -43,7 +42,7 @@ def book_ticket(
         Tickets.status == TicketStatus.BOOKED.value
     ).count()
 
-    if booked_tickets + number_of_tickets > event.total_tickets:
+    if booked_tickets + ticket_data.number_of_tickets > event.total_tickets:
         raise NoTicketsAvailable
 
     # Check if user has already booked tickets for this event
@@ -62,9 +61,9 @@ def book_ticket(
             Tickets(
                 event_id=ticket_data.event_id,
                 user_id=current_user.id,  # Use current user's ID
-                number_of_tickets=number_of_tickets,
+                number_of_tickets=ticket_data.number_of_tickets,
                 status=TicketStatus.BOOKED.value
-            ) for _ in range(number_of_tickets)
+            ) for _ in range(ticket_data.number_of_tickets)
         ]
 
         db.add_all(new_tickets)
@@ -81,12 +80,11 @@ def book_ticket(
             'phone_number': current_user.phone_number,
             'event_name': event.name,
             'event_date': event.date,
-            'ticket_count': number_of_tickets
+            'ticket_count': ticket_data.number_of_tickets
         }
 
         notification_service.send_booking_notification(notification_data)
         return new_tickets[0]
-
 
     except Exception:
         db.rollback()
@@ -95,9 +93,9 @@ def book_ticket(
 
 @tickets_router.delete("/{ticket_id}/cancel/", status_code=204)
 def cancel_ticket(
-    ticket_id: int,
-    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
-    db: Session = Depends(get_db)
+        ticket_id: int,
+        current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+        db: Session = Depends(get_db)
 ):
     """
     Cancel booked tickets
@@ -131,8 +129,8 @@ def cancel_ticket(
 
 @tickets_router.get("/list/", response_model=List[TicketResponse])
 def list_user_tickets(
-    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
-    db: Session = Depends(get_db)
+        current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+        db: Session = Depends(get_db)
 ):
     """
     Retrieve tickets for the current logged-in user
@@ -150,9 +148,9 @@ def list_user_tickets(
 
 @tickets_router.get("/events/{event_id}/tickets/", response_model=List[TicketResponse])
 def get_event_tickets(
-    event_id: int,
-    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
-    db: Session = Depends(get_db)
+        event_id: int,
+        current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+        db: Session = Depends(get_db)
 ):
     """
     Retrieve tickets for a specific event for the current user
@@ -176,11 +174,11 @@ def get_event_tickets(
     return tickets
 
 
-@tickets_router.get("/stats/", response_model=Dict[str, int])
+@tickets_router.get("/stats/{event_id}/", response_model=Dict[str, int])
 def get_event_ticket_stats(
-    event_id: int,
-    current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
-    db: Session = Depends(get_db)
+        event_id: int,
+        current_user: schemas.UserResponse = Depends(auth.get_current_verified_user),
+        db: Session = Depends(get_db)
 ) -> Dict[str, int]:
     """
     Get ticket statistics for an event

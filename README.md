@@ -42,10 +42,10 @@ listeners=PLAINTEXT://localhost:9092 advertised.listeners=PLAINTEXT://localhost:
 bin/kafka-server-start.sh config/server.properties
 
 # Open another terminal window and create the topic you'll be using
-bin/kafka-topics.sh --create --topic TICKET_BOOKING_TOPIC --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+bin/kafka-topics.sh --create --topic TICKET --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
 
 # Verify the topic was created
 bin/kafka-topics.sh --list --bootstrap-server localhost:9092
 
 # Then Run this command in different terminal
-python manage.py runserver python consume_kafka
+python consume_kafka run

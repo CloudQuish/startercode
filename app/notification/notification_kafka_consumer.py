@@ -3,7 +3,7 @@ import logging
 
 from kafka import KafkaConsumer
 from app.celery_tasks import send_email_celery
-from app.notification.kafka_notification_producer import TICKET_BOOKING_TOPIC, KAFKA_BOOTSTRAP_SERVERS
+from app.notification.kafka_notification_producer import TICKET, KAFKA_BOOTSTRAP_SERVERS
 
 
 def start_notification_consumer():
@@ -11,7 +11,7 @@ def start_notification_consumer():
     Kafka consumer to process ticket booking notifications
     """
     consumer = KafkaConsumer(
-        TICKET_BOOKING_TOPIC,
+        TICKET,
         bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
         group_id='ticket_notification_group',
         value_deserializer=lambda x: json.loads(x.decode('utf-8'))

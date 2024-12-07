@@ -10,8 +10,9 @@ from kafka.errors import KafkaError
 load_dotenv()
 
 # Kafka Configuration
-KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092')
-TICKET_BOOKING_TOPIC = 'ticket_booking_notifications'
+# KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092')
+KAFKA_BOOTSTRAP_SERVERS = 'localhost:9092'
+TICKET = 'ticket_booking_notifications'
 
 
 class NotificationService:
@@ -22,6 +23,7 @@ class NotificationService:
                 bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
                 value_serializer=lambda v: json.dumps(v).encode('utf-8')
             )
+            print("Successfully connected to Kafka...")
         except KafkaError as e:
             logging.error(f"Kafka Producer initialization error: {e}")
             raise
@@ -34,7 +36,7 @@ class NotificationService:
             ticket_info (Dict): Ticket and user details
         """
         try:
-            self.producer.send(TICKET_BOOKING_TOPIC, ticket_info)
+            self.producer.send(TICKET, ticket_info)
             self.producer.flush()
         except KafkaError as e:
             logging.error(f"Error sending Kafka message: {e}")
