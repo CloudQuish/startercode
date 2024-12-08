@@ -46,6 +46,16 @@ class EventControl:
         self.db.add_all(tickets)
         await self.db.commit()
 
+    async def get_tickets_by_event_id(self, event_id:int):
+        """Queries the tickets based on event id"""
+        stmt = (
+            select(Tickets)
+            .where(Tickets.event_id == event_id)
+        )
+        result = await self.db.execute(stmt)
+        tickets = [row[0] for row in result.all()]  # Fetch all
+        return tickets
+
     async def get_ticket_by_id_and_event_id(self, ticket_id, event_id):
         """Queries the db to get ticket based on id and event_id"""
         stmt = (
@@ -103,6 +113,16 @@ class EventControl:
         )
         result = await self.db.execute(stmt)
         order = result.scalar_one_or_none()  # Fetch a single result or None
+        return order
+    
+    async def get_order_by_user_id(self, user_id: int):
+        """Queries the db to get order based on user id"""
+        stmt = (
+            select(Orders)
+            .where(Orders.user_id == user_id)
+        )
+        result = await self.db.execute(stmt)
+        order = [row[0] for row in result.all()]  # Fetch all
         return order
     
     async def get_order_by_order_and_user_id(self, order_id: int, user_id: int):

@@ -6,7 +6,14 @@ from typing import Optional
 
 # application imports
 from utils.db_utils import get_db
-from schemas.event_schema import EventCreate, EventResp, OrderRep, EventListsResp
+from schemas.event_schema import (
+    EventCreate, 
+    EventResp, 
+    OrderRep, 
+    EventListsResp, 
+    TicketListResp,
+    OrderListResp,
+)
 from services.event_service import event_service
 from core.config import stripe_settings
 from utils.stripe_utils import stripe
@@ -32,6 +39,25 @@ async def create_new_event(newEvent: EventCreate, background_tasks: BackgroundTa
         _type_: resp
     """
     resp = await event_service(db).create_new_event(newEvent, background_tasks)
+    return resp
+
+@event_router.get(
+        "/{event_id}/",
+        status_code=status.HTTP_200_OK,
+        response_model=TicketListResp,
+)
+async def get_event_tickets(event_id: int, current_user=Depends(get_current_user),db: AsyncSession=Depends(get_db)):
+    """ Get Tickets List
+
+    Args:
+        event_id (int): The ID of event for which ticket is to bought
+        current_user (user): Currently logged in user who is booking the ticket,
+        db (AsyncSession): Async database connection
+        
+    Returns:
+        _type_: resp
+    """
+    resp = await event_service(db).get_event_tickets(event_id)
     return resp
 
 @event_router.post(
@@ -68,6 +94,25 @@ async def stripe_webhook(request: Request, db: AsyncSession = Depends(get_db)):
     return resp
 
 @event_router.get(
+    "/customer/orders/",
+    response_model=OrderListResp,
+    status_code=status.HTTP_200_OK
+)
+async def get_orders_of_user(db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
+    """Get List of current user's orders
+
+    Args:
+        db (AsyncSession): Async database connection
+        current_user (user): Current logged in user
+        
+    Returns:
+        _type_: resp
+    """
+    resp = await event_service(db).get_customer_orders(user_id=current_user.id)
+    return resp
+
+
+@event_router.get(
     "/orders/{id}",
     response_model=OrderRep,
     status_code=status.HTTP_200_OK
@@ -83,7 +128,7 @@ async def get_order_status(id: int, db: AsyncSession = Depends(get_db), current_
     Returns:
         _type_: resp
     """
-    resp = await event_service(db).get_customer_order(order_id=id, user_id=current_user.id)
+    resp = await event_service(db).get_customer_order_by_order_id(order_id=id, user_id=current_user.id)
     return resp
 
 @event_router.get(

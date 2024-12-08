@@ -14,6 +14,9 @@ from schemas.event_schema import (
     OrderRep, 
     EventListsResp,
     EventDetails,
+    TicketDetails,
+    TicketListResp,
+    OrderListResp,
 )
 from controllers.event_controllers import event_control
 from utils.redis_utils import acquire_ticket_lock
@@ -81,6 +84,25 @@ class EventService:
         }
         return resp
     
+    async def get_event_tickets(self, event_id: int)->TicketListResp:
+        """
+        This function retrieves the list of all the tickets associated with the event
+        """
+        event = await self.event_control.get_event_by_id(event_id=event_id)
+        if not event:
+            raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="No such event exist"
+                )
+        tickets = await self.event_control.get_tickets_by_event_id(event_id)
+        tickets = [TicketDetails.model_validate(ticket) for ticket in tickets]
+        resp = {
+            "message": "Tickets retrieved successfully",
+            "data": tickets,
+            "status": status.HTTP_200_OK
+        }
+        return resp
+    
     async def book_ticket(self, ticket_id: int, event_id: int, user_id: int):
         """
         This function facilitates the process of booking a ticket for an event 
@@ -92,7 +114,6 @@ class EventService:
         """
         # validates the event and ticket
         event = await self.event_control.get_event_by_id(event_id=event_id)
-        stripe_price_id = event.stripe_price_id
         if not event:
             raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
@@ -104,7 +125,8 @@ class EventService:
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="No such ticket exists"
             )
-        
+        stripe_price_id = event.stripe_price_id
+
         # checks the status of the tickets
         if ticket.status == TicketStatus.SOLD or ticket.status == TicketStatus.LOCKED:
             raise HTTPException(
@@ -128,7 +150,7 @@ class EventService:
                 "cancel_url":"http://127.0.0.1:8000"
             }
             checkout_session = CreateCheckoutSession(**session_data)
-            resp = await self.create_stripe_session_checkout(data = checkout_session)
+            resp = await self.create_stripe_session_checkout(data = checkout_session) # session id and stripe chekout url
 
             # creating a new order
             new_order_dict = {
@@ -261,8 +283,37 @@ class EventService:
             raise HTTPException(status_code=400, detail=str(e))
         except Exception as e:
             raise HTTPException(status_code=400, detail=str(e))
+        
+    async def get_customer_orders(self, user_id: int)-> OrderListResp:
+        """
+        This function retrieves a specific customer's order by validating the user association. 
+        If the order exists, it compiles order details, including the associated event, ticket ID, and order 
+        status. The response includes a success message, status code, and the retrieved data. If the order is 
+        not found, it raises a 404 Not Found exception with an appropriate message.
+        """
+        orders = await self.event_control.get_order_by_user_id(user_id=user_id)
+        if not orders:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Ready to order."
+            )
+        data = []
+        for order in orders:
+            data.append({
+                    "event": await self.event_control.get_event_by_id(event_id=int(order.event_id)),
+                    "ticket_id": order.ticket_id,
+                    "status": order.status
+                })
+            
+        resp = {
+            "message": "Customer orders retrieved successfully",
+            "status": status.HTTP_200_OK,
+            "data": data
+        }
+        return resp
+
     
-    async def get_customer_order(self, order_id: int, user_id: int)-> OrderRep:
+    async def get_customer_order_by_order_id(self, order_id: int, user_id: int)-> OrderRep:
         """
         This function retrieves a specific customer's order by validating the order and user association. 
         If the order exists, it compiles order details, including the associated event, ticket ID, and order 

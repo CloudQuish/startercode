@@ -21,7 +21,7 @@ async def acquire_ticket_lock(ticket_id:int, timeout=30):
     config = await redis.config_get('notify-keyspace-events')
     if 'Ex' not in config['notify-keyspace-events']:
         print("Warning: Redis keyspace events not properly configured")
-        await redis.config_set('notify-keyspace-events', 'Ex')
+        await redis.config_set('notify-keyspace-events', 'Ex') 
     lock_key = f"lock_ticket:{ticket_id}"
     lock_value = TicketStatus.LOCKED.value # This can be any unique value like a session ID
 

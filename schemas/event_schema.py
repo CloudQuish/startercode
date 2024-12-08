@@ -50,3 +50,13 @@ class OrderDetails(AbstractModel):
 
 class OrderRep(ResponseModel):
     data: OrderDetails
+
+class OrderListResp(ResponseModel):
+    data: List[OrderDetails]
+
+class TicketDetails(AbstractModel):
+    id: int
+    status: TicketStatus
+
+class TicketListResp(ResponseModel):
+    data: List[TicketDetails]

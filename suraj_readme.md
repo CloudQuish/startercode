@@ -66,6 +66,12 @@ Follow the steps below to set up and run the backend system:
      sudo service redis-server status
      ```
 
+6. **Run the script for listening to localhost webhook**
+   Execute the command in the command prompt:
+   ```bash
+   stripe listen --forward-to localhost:8000/api/v1/events/webhook
+   ```
+
 6. **Install dependencies**  
    Execute the dependency installation command to set up required packages:
    ```bash
