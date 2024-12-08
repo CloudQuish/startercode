@@ -66,8 +66,13 @@ Follow the steps below to set up and run the backend system:
      sudo service redis-server status
      ```
 
-6. **Run the script for listening to localhost webhook**
-   Execute the command in the command prompt:
+6. **Install the stripe application for windows**
+   Install stripe `.exe` file and it's path to environment variables. After the installation,
+   login into the stripe from command prompt:
+   ```bash
+   stripe login
+   ```
+   This will open a browser tab asking for allowing access to the cli and once the permissions are given, execute the command in the command prompt:
    ```bash
    stripe listen --forward-to localhost:8000/api/v1/events/webhook
    ```
