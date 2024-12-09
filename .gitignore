@@ -1,0 +1,57 @@
+# Python Bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual Environment
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE or Editor configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependency directories
+node_modules/
+*.egg-info/
+dist/
+build/
+*.log
+
+# .env file for environment variables
+.env
+
+# Database files (if you're using SQLite, for example)
+*.sqlite3
+
+# FastAPI (and other Python web frameworks) related files
+*.db
+*.sqlite
+
+# Pytest cache
+.cache/
+
+# mypy
+.mypy_cache/
+
+# Pydantic generated models or any auto-generated files
+*.pydantic/
+
+# Docker-related files
+docker-compose.override.yml
+Dockerfile
+
+# Coverage reports from testing
+.coverage
+coverage.xml
+*.cover
+
+# Temporary files
+*.bak
+*.tmp
