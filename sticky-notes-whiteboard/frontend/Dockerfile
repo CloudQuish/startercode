@@ -1,9 +1,8 @@
 # Use a lightweight Node.js image for building
 FROM node:alpine AS builder
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install && npm install --save-dev husky
 COPY . .
+RUN npm install && npm install --save-dev husky
 RUN npm run build
 
 # Use a lightweight Nginx image to serve the frontend

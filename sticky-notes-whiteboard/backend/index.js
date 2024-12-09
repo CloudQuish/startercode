@@ -16,7 +16,6 @@ app.use(cors());
 app.use("/api/flows", authMiddleware, flowRoutes);
 app.use("/api/user", userRoutes);
 
-
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
